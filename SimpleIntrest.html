@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Farmer Finance Portal</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(to right,#d4fc79,#96e6a1);
+      min-height:100vh;
+      color:#222;
+    }
+
+    .hero{
+      background:url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1400&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      height:350px;
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
+
+    .overlay{
+      position:absolute;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.5);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      color:white;
+      padding:20px;
+    }
+
+    .hero h1{
+      font-size:55px;
+      margin-bottom:20px;
+    }
+
+    .hero p{
+      font-size:22px;
+      max-width:900px;
+      line-height:1.6;
+    }
+
+    .container{
+      width:90%;
+      max-width:1200px;
+      margin:auto;
+      margin-top:-60px;
+      position:relative;
+      z-index:10;
+    }
+
+    .main-box{
+      display:flex;
+      flex-wrap:wrap;
+      gap:30px;
+    }
+
+    .calculator,
+    .summary{
+      flex:1;
+      min-width:320px;
+      background:white;
+      padding:35px;
+      border-radius:25px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .calculator h2,
+    .summary h2{
+      margin-bottom:25px;
+      color:#146c2f;
+      font-size:32px;
+    }
+
+    .input-box{
+      margin-bottom:25px;
+    }
+
+    .input-box label{
+      display:block;
+      margin-bottom:10px;
+      font-size:18px;
+      font-weight:bold;
+    }
+
+    .input-box input{
+      width:100%;
+      padding:15px;
+      border-radius:12px;
+      border:2px solid #4caf50;
+      font-size:16px;
+    }
+
+    .btn{
+      width:100%;
+      padding:18px;
+      border:none;
+      border-radius:15px;
+      background:#1b8f3e;
+      color:white;
+      font-size:20px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      background:#0f6b2b;
+      transform:scale(1.02);
+    }
+
+    .card{
+      background:#f4fff4;
+      padding:25px;
+      border-radius:20px;
+      margin-bottom:20px;
+      border-left:8px solid green;
+    }
+
+    .card h3{
+      font-size:20px;
+      margin-bottom:10px;
+    }
+
+    .card p{
+      font-size:32px;
+      font-weight:bold;
+      color:#146c2f;
+    }
+
+    .features{
+      margin-top:70px;
+    }
+
+    .features h2{
+      text-align:center;
+      font-size:42px;
+      margin-bottom:40px;
+      color:#0c5724;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .feature{
+      background:white;
+      padding:30px;
+      border-radius:25px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.15);
+      transition:0.3s;
+    }
+
+    .feature:hover{
+      transform:translateY(-10px);
+    }
+
+    .feature span{
+      font-size:55px;
+    }
+
+    .feature h3{
+      margin-top:15px;
+      margin-bottom:15px;
+      color:#146c2f;
+      font-size:25px;
+    }
+
+    .feature p{
+      line-height:1.7;
+      color:#555;
+    }
+
+    footer{
+      margin-top:70px;
+      background:#0c5724;
+      color:white;
+      text-align:center;
+      padding:30px;
+    }
+
+    footer h2{
+      margin-bottom:10px;
+    }
+
+    @media(max-width:768px){
+
+      .hero h1{
+        font-size:38px;
+      }
+
+      .hero p{
+        font-size:18px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero">
+
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+      <h1>🌾 Smart Farmer Finance Portal</h1>
+
+      <p>
+        Premium Agriculture Financial Management System for Farmers.
+        Calculate Interest, Track Farming Expenses, Manage Investments,
+        and Grow Smarter.
+      </p>
+    </div>
+
+  </section>
+
+  <div class="container">
+
+    <div class="main-box">
+
+      <!-- Calculator -->
+
+      <div class="calculator">
+
+        <h2>Interest Calculator</h2>
+
+        <div class="input-box">
+          <label>Enter Date [తేదీని నమోదు చేయండి]</label>
+          <input type="date" id="date">
+        </div>
+
+        <div class="input-box">
+          <label>Enter Amount [మొత్తాన్ని నమోదు చేయండి]</label>
+          <input type="number" id="amount" placeholder="Enter Amount">
+        </div>
+
+        <div class="input-box">
+          <label>Interest Rate Per Month [నెలకు వడ్డీ రేటు]</label>
+          <input type="number" id="interest" placeholder="Enter Interest Rate">
+        </div>
+
+        <button class="btn" onclick="calculateInterest()">
+          Calculate Now
+        </button>
+
+      </div>
+
+      <!-- Summary -->
+
+      <div class="summary">
+
+        <h2>Financial Summary</h2>
+
+        <div class="card">
+          <h3>Months Between</h3>
+          <p id="months">0</p>
+        </div>
+
+        <div class="card">
+          <h3>Total Interest Added</h3>
+          <p id="totalInterest">₹ 0</p>
+        </div>
+
+        <div class="card">
+          <h3>Total Amount Including Interest</h3>
+          <p id="totalAmount">₹ 0</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Features -->
+
+    <section class="features">
+
+      <h2>Premium Farmer Features</h2>
+
+      <div class="feature-grid">
+
+        <div class="feature">
+          <span>🌦️</span>
+          <h3>Weather Monitoring</h3>
+          <p>
+            Get weather awareness and rainfall information for better farming planning.
+          </p>
+        </div>
+
+        <div class="feature">
+          <span>🌱</span>
+          <h3>Crop Planning</h3>
+          <p>
+            Smart crop investment suggestions based on financial capacity.
+          </p>
+        </div>
+
+        <div class="feature">
+          <span>📈</span>
+          <h3>Expense Tracking</h3>
+          <p>
+            Track fertilizer, seeds, labour, and farming expenses easily.
+          </p>
+        </div>
+
+        <div class="feature">
+          <span>🚜</span>
+          <h3>Equipment Management</h3>
+          <p>
+            Manage tractors, irrigation tools, and machine maintenance schedules.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <footer>
+
+    <h2>🌾 Smart Farmer Finance Portal</h2>
+
+    <p>
+      Empowering Farmers with Digital Financial Solutions
+    </p>
+
+  </footer>
+
+  <script>
+
+    function calculateInterest(){
+
+      let date = document.getElementById("date").value;
+      let amount = parseFloat(document.getElementById("amount").value);
+      let interest = parseFloat(document.getElementById("interest").value);
+
+      if(date === "" || isNaN(amount) || isNaN(interest)){
+
+        alert("Please fill all fields");
+
+        return;
+      }
+
+      let enteredDate = new Date(date);
+
+      let today = new Date();
+
+      let months =
+      (today.getFullYear() - enteredDate.getFullYear()) * 12 +
+      (today.getMonth() - enteredDate.getMonth());
+
+      if(months < 0){
+
+        months = 0;
+      }
+
+      let totalInterest =
+      amount * (interest / 100) * months;
+
+      let totalAmount =
+      amount + totalInterest;
+
+      document.getElementById("months").innerHTML =
+      months;
+
+      document.getElementById("totalInterest").innerHTML =
+      "₹ " + totalInterest.toFixed(2);
+
+      document.getElementById("totalAmount").innerHTML =
+      "₹ " + totalAmount.toFixed(2);
+
+    }
+
+  </script>
+
+</body>
+</html>
